@@ -12,7 +12,7 @@ import undetected_chromedriver as uc
 # Iniciar navegador
 browser = uc.Chrome()
 
-# URL principal
+# Aclarar la URL principal
 url = "https://www.zonaprop.com.ar/departamentos-alquiler-capital-federal-pagina-2.html"
 max_paginas = 471
 x=2
@@ -21,7 +21,7 @@ datos_lista = []
 
 while x <= max_paginas:
     
-    # Verificar si x es igual a 473 y detener la ejecución
+    # Verificar si x es igual al número máximo de páginas para terminar la ejecución
     if x == 471:
         print("Se alcanzó la última página, finalizando ejecución.")
         break
@@ -30,23 +30,27 @@ while x <= max_paginas:
     
     browser.get(url)
     
-    time.sleep(random.randint(10,12))
+    time.sleep(random.randint(10,12)) # Pausa para evitar detección
 
     body = browser.find_element("tag name", "body")
     body.send_keys(Keys.PAGE_DOWN)
-    time.sleep(random.randint(2, 4))  # Pausa
-    
+    time.sleep(random.randint(2, 4))  # Pausa y movimiento para evitar detección
+
+    # Hacer click en el boton de cookies automaticamente
     try:
         browser.find_element("xpath",'//button[@data-qa="cookies-policy-banner"]').click()
     except:
         pass
     
+    # Obtenemos el HTML de la página para extraer datos
     html = browser.page_source
     
     soup = bs(html, 'lxml')
     
+    # Buscamos el número de la página
     pagina_actual = int(soup.find("div", class_="paging-module__container-paging").find("a", class_="paging-module__page-item paging-module__page-item-current",).text)
     
+    # Condición para extraer los datos
     if x == pagina_actual:
         propiedades = soup.find_all("div", class_="postingCard-module__posting-container")
 
@@ -62,7 +66,7 @@ while x <= max_paginas:
             caracteristicas = propiedad.find("h3", class_="postingMainFeatures-module__posting-main-features-block postingMainFeatures-module__posting-main-features-block-one-line")
             datos = caracteristicas.find_all("span", class_="postingMainFeatures-module__posting-main-features-span postingMainFeatures-module__posting-main-features-listing") if caracteristicas else []
 
-            # Inicializar categorías con 0
+            # Inicializar categorías con 0 para evitar errores posteriores en el dataset
             metros_cuadrados = 0
             ambientes = 0
             dormitorios = 0
@@ -100,8 +104,9 @@ while x <= max_paginas:
     else:
         # Si no es igual a la página actual, incrementar x
         x = x + 1
+# Creamos dataframe y lo guardamos en formato CSV con ;        
 df = pd.DataFrame(datos_lista)
 df.to_csv("Alquileres.csv", index=False, encoding="utf-8-sig", sep=";")
 
-
+# Informamos extracción de datos y fin del programa
 print("Datos extraidos")
