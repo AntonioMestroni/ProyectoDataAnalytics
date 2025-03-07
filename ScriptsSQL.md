@@ -1,4 +1,4 @@
-#📌 Análisis y limpieza de Datos de Alquileres en SQL
+# 📌 Análisis y limpieza de Datos de Alquileres en SQL
 
 Esta etapa consiste principalmente en la carga y limpieza de datos extraídos anteriormente mediante web scraping, preparandolos para posteriormente crear un informe limpio de errores en Power BI. Adicionalmente se aplicaron cambios también en dicho programa utilizando Power Query y Dax.
 ### Creación de Base de datos
