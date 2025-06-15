@@ -7,3 +7,6 @@ Este proyecto se enfoca en realizar un **ETL** comenzando con un web scraping de
 - **Python** (Selenium, Pandas) - Extracción de datos
 - **SQL** (Base de datos, consultas) - Transformación de datos
 - **Power BI** (Análisis y visualización de datos) - Carga y visualización de datos
+
+Este proyecto cuenta con una segunda versión donde trabajé en colaboración para mejorar y ampliar los análisis realizados en la versión original.
+**https://github.com/Felimartinez1/Departamentos-Buenos-Aires**
